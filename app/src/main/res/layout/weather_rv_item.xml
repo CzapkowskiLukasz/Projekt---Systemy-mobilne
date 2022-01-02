@@ -14,15 +14,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/card_back">
+
         <TextView
+            android:id="@+id/idTTVTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/idTTVTime"
             android:gravity="center"
             android:padding="4dp"
             android:text="time"
-            android:textColor="@color/white"
-            android:textAlignment="center"></TextView>
+            android:textAlignment="center"
+            android:textColor="@color/white"></TextView>
 
         <TextView
             android:layout_width="match_parent"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@color/backgroundColor"
     tools:context=".MainActivity">
 
     <ProgressBar
@@ -12,14 +12,14 @@
         android:layout_height="wrap_content"
         android:id="@+id/idPbLoading"
         android:layout_centerInParent="true"
-        android:visibility="visible"
+        android:visibility="gone"
         ></ProgressBar>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/idRLHome"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <ImageView
             android:id="@+id/idIVBack"
@@ -27,71 +27,51 @@
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:src="@color/black"></ImageView>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Q U I Z"
-            android:textAlignment="center"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:layout_marginTop="30dp"
-            android:padding="20dp"
-            android:textSize="18sp"
-            android:id="@+id/idTVCityName"
-            ></TextView>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:id="@+id/idLLEdt"
-            android:layout_below="@+id/idTVCityName"
-            android:weightSum="5"
-            >
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/idTTLCity"
-                android:layout_margin="10dp"
-                android:layout_weight="4.5"
-                android:background="@android:color/transparent"
-                android:hint="enter city"
-                android:padding="5dp"
-                app:hintTextColor="@color/white"
-                android:textColorHint="@color/white"
-                >
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/idEdtCity"
-                    android:importantForAutofill="no"
-                    android:inputType="text"
-                    android:singleLine="true"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:background="@android:color/transparent"
-                    ></com.google.android.material.textfield.TextInputEditText>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
+            android:id="@+id/idLLBtns">
             <ImageView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:id="@+id/idIVSearch"
+                android:src="@drawable/ic_settings"
                 android:layout_margin="10dp"
-                android:layout_gravity="center"
-                android:background="@android:color/transparent"
-                android:src="@drawable/ic_search"
-                app:tint="@color/white"
-                ></ImageView>
+                android:id="@+id/idIVSettings"></ImageView>
+            <Space
+                android:layout_height="match_parent"
+                android:layout_width="300dp">
+            </Space>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:src="@drawable/ic_map"
+                android:layout_margin="10dp"
+                android:id="@+id/idIVMap"></ImageView>
+
         </LinearLayout>
+
+        <TextView
+            android:layout_below="@id/idLLBtns"
+            android:id="@+id/idTVCityName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:padding="20dp"
+            android:text="London"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="18sp"></TextView>
+
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/idTVTemperatur"
-            android:layout_below="@+id/idLLEdt"
+            android:layout_below="@id/idTVCityName"
             android:layout_margin="10dp"
             android:gravity="center_horizontal"
             android:padding="5dp"

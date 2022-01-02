@@ -6,12 +6,15 @@ import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.app.ActionBar;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -48,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView cityNameTV, temperatureTV, conditionTv;
     private RecyclerView weatherRV;
     private TextInputEditText cityEdt;
-    private ImageView backIV, iconIV, searchIV;
+    private ImageView backIV, iconIV, searchIV, settingsIV, mapIV;
     private ArrayList<WeatherRVModel> weatherRVModelArrayList;
     private WeatherRVAdapter weatherRVAdapter;
     private LocationManager locationManager;
@@ -62,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         setContentView(R.layout.activity_main);
+        mapIV = findViewById(R.id.idIVMap);
+        settingsIV = findViewById(R.id.idIVSettings);
         homeRl = findViewById(R.id.idRLHome);
        loadingPB = findViewById(R.id.idPbLoading);
         cityNameTV = findViewById(R.id.idTVCityName);
@@ -95,20 +100,28 @@ public class MainActivity extends AppCompatActivity {
             getWeatherInfo("London");
         }
 
-
-        searchIV.setOnClickListener(new View.OnClickListener() {
+        mapIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String city = cityEdt.getText().toString();
-                if(city.isEmpty()){
-                    Toast.makeText(MainActivity.this, "enter dupa", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    cityNameTV.setText(cityName);
-                    getWeatherInfo((city));
-                }
+                Intent intent = new Intent(MainActivity.this, CityList.class);
+                startActivity(intent);
             }
         });
+
+
+//        searchIV.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                String city = cityEdt.getText().toString();
+//                if(city.isEmpty()){
+//                    Toast.makeText(MainActivity.this, "enter dupa", Toast.LENGTH_SHORT).show();
+//                }
+//                else{
+//                    cityNameTV.setText(cityName);
+//                    getWeatherInfo((city));
+//                }
+//            }
+//        });
 
     }
 
