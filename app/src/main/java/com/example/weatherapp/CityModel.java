@@ -2,24 +2,14 @@ package com.example.weatherapp;
 
 public class CityModel {
 
-    private String time;
     private String temperature;
     private String icon;
     private String name;
 
-    public CityModel(String time, String temperature, String icon, String name) {
-        this.time = time;
+    public CityModel(String icon, String name, String temperature) {
         this.temperature = temperature;
         this.icon = icon;
         this.name = name;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
     }
 
     public String getTemperature() {

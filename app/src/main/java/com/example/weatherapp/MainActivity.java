@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar loadingPB;
     private TextView cityNameTV, temperatureTV, conditionTv;
     private RecyclerView weatherRV;
-    private TextInputEditText cityEdt;
     private ImageView backIV, iconIV, searchIV, settingsIV, mapIV;
     private ArrayList<WeatherRVModel> weatherRVModelArrayList;
     private WeatherRVAdapter weatherRVAdapter;
@@ -73,10 +72,8 @@ public class MainActivity extends AppCompatActivity {
         temperatureTV = findViewById(R.id.idTVTemperatur);
         conditionTv = findViewById(R.id.idTVCondition);
         weatherRV = findViewById(R.id.idRVWeather);
-        cityEdt = findViewById(R.id.idEdtCity);
         backIV= findViewById(R.id.idIVBack);
         iconIV = findViewById(R.id.idIVIcon);
-        searchIV = findViewById(R.id.idIVSearch);
         weatherRVModelArrayList = new ArrayList<>();
         weatherRVAdapter = new WeatherRVAdapter(this, weatherRVModelArrayList);
         weatherRV.setAdapter((weatherRVAdapter));
@@ -107,21 +104,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
-//        searchIV.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String city = cityEdt.getText().toString();
-//                if(city.isEmpty()){
-//                    Toast.makeText(MainActivity.this, "enter dupa", Toast.LENGTH_SHORT).show();
-//                }
-//                else{
-//                    cityNameTV.setText(cityName);
-//                    getWeatherInfo((city));
-//                }
-//            }
-//        });
 
     }
 
