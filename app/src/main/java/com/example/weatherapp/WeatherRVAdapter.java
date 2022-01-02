@@ -17,10 +17,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class WeatherRVAdapter  extends RecyclerView.Adapter<WeatherRVAdapter.ViewHolder> {
+public class WeatherRVAdapter extends RecyclerView.Adapter<WeatherRVAdapter.ViewHolder> {
 
-    private Context context;
-    private ArrayList<WeatherRVModel> weatherRVModels;
+    private final Context context;
+    private final ArrayList<WeatherRVModel> weatherRVModels;
 
     public WeatherRVAdapter(Context context, ArrayList<WeatherRVModel> weatherRVModels) {
         this.context = context;
@@ -30,7 +30,7 @@ public class WeatherRVAdapter  extends RecyclerView.Adapter<WeatherRVAdapter.Vie
     @NonNull
     @Override
     public WeatherRVAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.weather_rv_item,parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.weather_rv_item, parent, false);
         return new ViewHolder(view);
     }
 
@@ -39,10 +39,10 @@ public class WeatherRVAdapter  extends RecyclerView.Adapter<WeatherRVAdapter.Vie
         WeatherRVModel model = weatherRVModels.get(position);
         holder.temperatueTV.setText(model.getTemperature() + "°C");
         Picasso.get().load("http:".concat(model.getIcon())).into(holder.conditionTV);
-        holder.windtTV.setText(model.getWindSpeed()+"km/h");
+        holder.windtTV.setText(model.getWindSpeed() + "km/h");
         SimpleDateFormat input = new SimpleDateFormat("yyyy-MM-dd hh:mm");
         SimpleDateFormat output = new SimpleDateFormat("hh:mm aa");
-        try{
+        try {
             Date t = input.parse(model.getTime());
             holder.timeTV.setText((output.format(t)));
         } catch (ParseException e) {
@@ -55,13 +55,16 @@ public class WeatherRVAdapter  extends RecyclerView.Adapter<WeatherRVAdapter.Vie
         return weatherRVModels.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView windtTV,temperatueTV, timeTV;
-        private ImageView conditionTV;
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        private final TextView windtTV;
+        private final TextView temperatueTV;
+        private final TextView timeTV;
+        private final ImageView conditionTV;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             windtTV = itemView.findViewById(R.id.idTVWindSpeed);
-            temperatueTV= itemView.findViewById(R.id.idTTVTemperature);
+            temperatueTV = itemView.findViewById(R.id.idTTVTemperature);
             timeTV = itemView.findViewById(R.id.idTTVTime);
             conditionTV = itemView.findViewById(R.id.idIVCondition);
         }

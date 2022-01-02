@@ -26,8 +26,8 @@ import java.util.List;
 public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.ViewHolder> {
 
 
-    private Context context;
-    private ArrayList<CityModel> cityModelArrayList;
+    private final Context context;
+    private final ArrayList<CityModel> cityModelArrayList;
 
     public WeatherListAdapter(Context context, ArrayList<CityModel> cityModelArrayList) {
         this.context = context;
@@ -38,7 +38,7 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
     @NonNull
     @Override
     public WeatherListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.city_list_card,parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.city_list_card, parent, false);
         return new ViewHolder(view);
     }
 
@@ -56,8 +56,10 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView nameTV,temperatureTV;
-        private ImageView iconIV;
+        private final TextView nameTV;
+        private final TextView temperatureTV;
+        private final ImageView iconIV;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             nameTV = itemView.findViewById(R.id.idTVCityListName);

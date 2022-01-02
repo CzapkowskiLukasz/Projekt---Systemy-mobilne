@@ -55,16 +55,15 @@ public class CityList extends AppCompatActivity {
 
         ArrayList<CityModel> cityModelArrayList = new ArrayList<CityModel>();
 
-        test();
+        refreshList();
 
-            searchIV.setOnClickListener(new View.OnClickListener() {
+        searchIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String city = cityEdt.getText().toString();
-                if(city.isEmpty()){
+                if (city.isEmpty()) {
                     Toast.makeText(CityList.this, "enter dupa", Toast.LENGTH_SHORT).show();
-                }
-                else{
+                } else {
                     getWeatherInfo(city, db);
                     getData();
                 }
@@ -74,37 +73,36 @@ public class CityList extends AppCompatActivity {
 
     }
 
-    private void test(){
+    private void refreshList() {
         cityModelArrayList = getData();
         weatherListAdapter = new WeatherListAdapter(this, cityModelArrayList);
         weatherCityList.setAdapter((weatherListAdapter));
     }
 
-    private ArrayList<CityModel> getData(){
+    private ArrayList<CityModel> getData() {
         ArrayList<CityModel> cityModelArrayListHelper = new ArrayList<>();
         Cursor result = db.getData();
-        if(result.getCount() == 0) {
+        if (result.getCount() == 0) {
             Toast.makeText(CityList.this, "git", Toast.LENGTH_SHORT).show();
             return null;
         }
 
-        while(result.moveToNext()){
+        while (result.moveToNext()) {
             cityModelArrayListHelper.add(new CityModel(result.getString(3), result.getString(1), result.getString(2)));
         }
 
         return cityModelArrayListHelper;
     }
 
-    private void validateData(Boolean result){
-        if(result) {
-            test();
+    private void validateData(Boolean result) {
+        if (result) {
+            refreshList();
             Toast.makeText(CityList.this, "git", Toast.LENGTH_SHORT).show();
-        }
-        else
+        } else
             Toast.makeText(CityList.this, "nie git", Toast.LENGTH_SHORT).show();
     }
 
-    private void getWeatherInfo(String cityName, DBHelper dbHelper){
+    private void getWeatherInfo(String cityName, DBHelper dbHelper) {
         String url = "http://api.weatherapi.com/v1/forecast.json?key=267e447e5e524f4286d134655213012&q=" + cityName + "&days=1&aqi=no&alerts=no";
         RequestQueue requestQueue = Volley.newRequestQueue((CityList.this));
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -113,7 +111,7 @@ public class CityList extends AppCompatActivity {
                 try {
                     String temperature = response.getJSONObject("current").getString("temp_c");
                     String conditionIcon = response.getJSONObject("current").getJSONObject("condition").getString("icon");
-                    Boolean result = dbHelper.insertCity(cityName, temperature,conditionIcon);
+                    Boolean result = dbHelper.insertCity(cityName, temperature, conditionIcon);
                     getData();
                     validateData(result);
                 } catch (JSONException e) {
@@ -133,7 +131,7 @@ public class CityList extends AppCompatActivity {
         InputMethodManager inputMethodManager =
                 (InputMethodManager) activity.getSystemService(
                         Activity.INPUT_METHOD_SERVICE);
-        if(inputMethodManager.isAcceptingText()){
+        if (inputMethodManager.isAcceptingText()) {
             inputMethodManager.hideSoftInputFromWindow(
                     activity.getCurrentFocus().getWindowToken(),
                     0

@@ -26,20 +26,17 @@ public class DBHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP Table if exists UserData");
     }
 
-    public Boolean insertCity(String name, String temperature, String icon){
+    public Boolean insertCity(String name, String temperature, String icon) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("Icon", icon);
         contentValues.put("Name", name);
         contentValues.put("Temperature", temperature);
-        long result = db.insert("UserData", null,contentValues);
-        if(result == -1)
-            return false;
-        else
-            return true;
+        long result = db.insert("UserData", null, contentValues);
+        return result != -1;
     }
 
-    public Cursor getData(){
+    public Cursor getData() {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM UserData", null);
         return cursor;
