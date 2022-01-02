@@ -25,6 +25,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,12 +62,25 @@ public class CityList extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String city = cityEdt.getText().toString();
+                Boolean isAdded = false;
+                ArrayList<CityModel> cityModelArrayListHelper = getData();
                 if (city.isEmpty()) {
-                    Toast.makeText(CityList.this, "enter dupa", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CityList.this, "nie moze byc puste", Toast.LENGTH_SHORT).show();
                 } else {
-                    getWeatherInfo(city, db);
-                    getData();
-                }
+                    if(cityModelArrayListHelper != null){
+                        for(int i=0; i< cityModelArrayListHelper.size() ; i++){
+                            if(cityModelArrayListHelper.get(i).getName().equals(city)){
+                                Toast.makeText(CityList.this, "juz dodany", Toast.LENGTH_SHORT).show();
+                                isAdded = true;
+                                break;
+                            }
+                        }
+                    }
+                    if(isAdded == false){
+                        addCity(city, db);
+                    }
+                    }
+                cityEdt.setText("");
                 hideSoftKeyboard(CityList.this);
             }
         });
@@ -90,7 +104,7 @@ public class CityList extends AppCompatActivity {
         while (result.moveToNext()) {
             cityModelArrayListHelper.add(new CityModel(result.getString(3), result.getString(1), result.getString(2)));
         }
-
+        int kutas = cityModelArrayListHelper.size();
         return cityModelArrayListHelper;
     }
 
@@ -102,16 +116,17 @@ public class CityList extends AppCompatActivity {
             Toast.makeText(CityList.this, "nie git", Toast.LENGTH_SHORT).show();
     }
 
-    private void getWeatherInfo(String cityName, DBHelper dbHelper) {
+    private void addCity(String cityName, DBHelper dbHelper) {
         String url = "http://api.weatherapi.com/v1/forecast.json?key=267e447e5e524f4286d134655213012&q=" + cityName + "&days=1&aqi=no&alerts=no";
         RequestQueue requestQueue = Volley.newRequestQueue((CityList.this));
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
+                    String name = response.getJSONObject("location").getString("name");
                     String temperature = response.getJSONObject("current").getString("temp_c");
                     String conditionIcon = response.getJSONObject("current").getJSONObject("condition").getString("icon");
-                    Boolean result = dbHelper.insertCity(cityName, temperature, conditionIcon);
+                    Boolean result = dbHelper.insertCity(name, temperature, conditionIcon);
                     getData();
                     validateData(result);
                 } catch (JSONException e) {

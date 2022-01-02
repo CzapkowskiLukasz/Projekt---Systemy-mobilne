@@ -52,7 +52,11 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
 
     @Override
     public int getItemCount() {
-        return cityModelArrayList.size();
+
+        if (cityModelArrayList!= null)
+            return cityModelArrayList.size();
+        else
+            return 0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
