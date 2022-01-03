@@ -5,6 +5,7 @@
       <map>
         <entry key="../../../../../layout/custom_preview.xml" value="0.13385416666666666" />
         <entry key="app/src/main/res/drawable/card_back.xml" value="0.20885416666666667" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.5494791666666666" />
         <entry key="app/src/main/res/drawable/ic_search.xml" value="0.20885416666666667" />
         <entry key="app/src/main/res/drawable/list.xml" value="0.20885416666666667" />
         <entry key="app/src/main/res/layout/activity_city_list.xml" value="0.335" />

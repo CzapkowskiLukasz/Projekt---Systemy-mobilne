@@ -50,8 +50,15 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
     public void onBindViewHolder(@NonNull WeatherListAdapter.ViewHolder holder, int position) {
         CityModel cityModel = cityModelArrayList.get(position);
         holder.temperatureTV.setText(cityModel.getTemperature() + "°C");
-        Picasso.get().load("http:".concat(cityModel.getIcon())).into(holder.iconIV);
+        Picasso.get().load("http:".concat(cityModel.getIcon())).resize(128, 128).into(holder.iconIV);
         holder.nameTV.setText(cityModel.getName());
+        int isDay = cityModel.getIsDay();
+        if (isDay == 1) {
+            //day
+            Picasso.get().load("https://images.unsplash.com/photo-1597200381847-30ec200eeb9a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2874&q=80").into(holder.backIV);
+        } else {
+            Picasso.get().load("https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2942&q=80").into(holder.backIV);
+        }
     }
 
     @Override
@@ -67,12 +74,14 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
         private final TextView nameTV;
         private final TextView temperatureTV;
         private final ImageView iconIV;
+        private final ImageView backIV;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             nameTV = itemView.findViewById(R.id.idTVCityListName);
             temperatureTV = itemView.findViewById(R.id.idTVCityListTemp);
             iconIV = itemView.findViewById(R.id.idIVCityListIcon);
+            backIV = itemView.findViewById(R.id.idIVCityListBack);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                                             @Override

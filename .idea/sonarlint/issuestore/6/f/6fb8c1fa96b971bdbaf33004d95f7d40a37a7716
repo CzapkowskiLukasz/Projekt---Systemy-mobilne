@@ -1,0 +1,44 @@
+
+o	java:S116>"ZRename this field "PERMISSION_CODE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(æöêš
+7
+java:S1170>"!Make this final field static too.(æöêš
+e
+java:S16598"JDeclare "temperatureTV" and all following declarations on a separate line.(¢À±öıÿÿÿÿ
+Y
+java:S1659:"CDeclare "iconIV" and all following declarations on a separate line.(òĞÎĞ
+m
+java:S1450?"WRemove the "cityName" field and declare it as a local variable in the relevant methods.(„½öÓ
+t
+java:S1450="^Remove the "locationManager" field and declare it as a local variable in the relevant methods.(ô­âº
+j
+java:S1450:"TRemove the "mapIV" field and declare it as a local variable in the relevant methods.(òĞÎĞ
+o
+java:S1450:"YRemove the "settingsIV" field and declare it as a local variable in the relevant methods.(òĞÎĞ
+m
+java:S14509"XRemove the "weatherRV" field and declare it as a local variable in the relevant methods.(ßØ>
+‚
+java:S1149‡"_Replace the synchronized class "StringBuffer" by an unsynchronized one such as "StringBuilder".(¨âàøÿÿÿÿ8–à›‰â/
+m
+java:S3252j"WUse static access with "androidx.core.content.ContextCompat" for "checkSelfPermission".(¥êêí
+m
+java:S3252j"WUse static access with "androidx.core.content.ContextCompat" for "checkSelfPermission".(¥êêí
+f
+java:S1874”"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(Ó»×¶şÿÿÿÿ
+]
+java:S1126·"AReplace this if-then-else statement by a single return statement.(Ñß„‘øÿÿÿÿ
+D
+java:S1068:".Remove this unused "settingsIV" private field.(òĞÎĞ
+a
+java:S1192Õ"JDefine a constant instead of duplicating this literal "condition" 3 times.(¯äŠ
+d
+java:S1192Ò"HDefine a constant instead of duplicating this literal "current" 4 times.(À«¡‹ûÿÿÿÿ
+C
+java:S1604\"(Make this anonymous inner class a lambda(–”µøÿÿÿÿ
+>
+java:S1604{"(Make this anonymous inner class a lambda(ÖÙØ¯
+D
+java:S1604È"(Make this anonymous inner class a lambda(ÎÄªÿÿÿÿÿ
+D
+java:S1604÷"(Make this anonymous inner class a lambda(´¸©”üÿÿÿÿ
+A
+java:S5411è"*Use the primitive boolean expression here.(ğñĞü

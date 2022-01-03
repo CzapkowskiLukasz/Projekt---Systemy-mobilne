@@ -6,12 +6,14 @@ public class CityModel {
     private String icon;
     private String name;
     private int activity;
+    private int isDay;
 
-    public CityModel(String icon, String name, String temperature, int activity) {
+    public CityModel(String icon, String name, String temperature, int activity, int isDay) {
         this.temperature = temperature;
         this.icon = icon;
         this.name = name;
         this.activity = activity;
+        this.isDay = isDay;
     }
 
     public String getTemperature() {
@@ -40,5 +42,9 @@ public class CityModel {
 
     public int getActivity() {
         return activity;
+    }
+
+    public int getIsDay() {
+        return isDay;
     }
 }

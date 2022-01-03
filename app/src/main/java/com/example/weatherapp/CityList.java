@@ -60,7 +60,8 @@ public class CityList extends AppCompatActivity {
         ArrayList<CityModel> cityModelArrayList = new ArrayList<CityModel>();
 
         cityModelArrayList = getData();
-        refreshData(cityModelArrayList);
+        if(cityModelArrayList != null)
+            refreshData(cityModelArrayList);
         refreshList();
 
         setSwiper();
@@ -123,7 +124,7 @@ public class CityList extends AppCompatActivity {
         }
 
         while (result.moveToNext()) {
-            cityModelArrayListHelper.add(new CityModel(result.getString(3), result.getString(1), result.getString(2), result.getInt(4)));
+            cityModelArrayListHelper.add(new CityModel(result.getString(3), result.getString(1), result.getString(2), result.getInt(4), result.getInt(5)));
         }
         return cityModelArrayListHelper;
     }
@@ -157,6 +158,7 @@ public class CityList extends AppCompatActivity {
                     String name = response.getJSONObject("location").getString("name");
                     String temperature = response.getJSONObject("current").getString("temp_c");
                     String conditionIcon = response.getJSONObject("current").getJSONObject("condition").getString("icon");
+                    int isDay = response.getJSONObject("current").getInt("is_day");
                     if(state.equals("addCity")){
                         if(cityModelArrayList != null) {
                             for (int i = 0; i < cityModelArrayList.size(); i++) {
@@ -166,7 +168,7 @@ public class CityList extends AppCompatActivity {
                                 }
                             }
                         }
-                        Boolean result = db.insertCity(name, temperature, conditionIcon, 0);
+                        Boolean result = db.insertCity(name, temperature, conditionIcon, 0, isDay);
                         validateData(result);
                     }
                     else{

@@ -15,6 +15,11 @@
         android:visibility="gone"
         ></ProgressBar>
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/swipeContainer"
+        >
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -55,10 +60,10 @@
         </LinearLayout>
 
         <TextView
-            android:layout_below="@id/idLLBtns"
             android:id="@+id/idTVCityName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/idLLBtns"
             android:layout_marginTop="30dp"
             android:gravity="center"
             android:padding="20dp"
@@ -67,19 +72,34 @@
             android:textColor="@color/white"
             android:textSize="18sp"></TextView>
 
-
         <TextView
+            android:id="@+id/idTVCityTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/idTVTemperatur"
             android:layout_below="@id/idTVCityName"
-            android:layout_margin="10dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="YYYY:MM:DD HH:mm"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="12sp"></TextView>
+
+
+        <TextView
+            android:id="@+id/idTVTemperatur"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/idTVCityTime"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
             android:gravity="center_horizontal"
             android:padding="5dp"
             android:text="23"
             android:textColor="@color/white"
-            android:textSize="70dp"
-            ></TextView>
+            android:textSize="70dp"></TextView>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -123,4 +143,5 @@
 
 
     </RelativeLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </RelativeLayout>
