@@ -37,6 +37,47 @@ public class DBHelper extends SQLiteOpenHelper {
         return result != -1;
     }
 
+    public Boolean manageCityActivity(String name, int activity){
+        SQLiteDatabase DB = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("IsActive", activity);
+        Cursor cursor = DB.rawQuery("Select * from UserData where Name = ?", new String[]{name});
+        if (cursor.getCount() > 0) {
+            long result = DB.update("UserData", contentValues, "Name=?", new String[]{name});
+            if (result == -1) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public Cursor getCityByActivity(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM UserData WHERE IsActive = 1", null);
+        return cursor;
+    }
+
+    public Boolean updateCity(String name, String temperature, String icon) {
+        SQLiteDatabase DB = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("Icon", icon);
+        contentValues.put("Temperature", temperature);
+        Cursor cursor = DB.rawQuery("Select * from UserData where Name = ?", new String[]{name});
+        if (cursor.getCount() > 0) {
+            long result = DB.update("UserData", contentValues, "Name=?", new String[]{name});
+            if (result == -1) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            return false;
+        }
+    }
+
     public Boolean deleteCity (String name){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM UserData WHERE Name = ?", new String[] {name});

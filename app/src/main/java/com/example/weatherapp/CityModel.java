@@ -5,11 +5,13 @@ public class CityModel {
     private String temperature;
     private String icon;
     private String name;
+    private int activity;
 
-    public CityModel(String icon, String name, String temperature) {
+    public CityModel(String icon, String name, String temperature, int activity) {
         this.temperature = temperature;
         this.icon = icon;
         this.name = name;
+        this.activity = activity;
     }
 
     public String getTemperature() {
@@ -34,5 +36,9 @@ public class CityModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getActivity() {
+        return activity;
     }
 }

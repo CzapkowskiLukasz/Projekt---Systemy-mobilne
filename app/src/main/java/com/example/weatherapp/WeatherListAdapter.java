@@ -1,6 +1,7 @@
 package com.example.weatherapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,10 +29,12 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
 
 
     private final Context context;
+    private final DBHelper db;
     private final ArrayList<CityModel> cityModelArrayList;
 
-    public WeatherListAdapter(Context context, ArrayList<CityModel> cityModelArrayList) {
+    public WeatherListAdapter(Context context, DBHelper db, ArrayList<CityModel> cityModelArrayList) {
         this.context = context;
+        this.db = db;
         this.cityModelArrayList = cityModelArrayList;
     }
 
@@ -69,6 +73,31 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
             nameTV = itemView.findViewById(R.id.idTVCityListName);
             temperatureTV = itemView.findViewById(R.id.idTVCityListTemp);
             iconIV = itemView.findViewById(R.id.idIVCityListIcon);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                String oldActiveCity = findActuallyActiveCity();
+                                                if(oldActiveCity.isEmpty())
+                                                    db.manageCityActivity(nameTV.getText().toString(), 1);
+                                                else{
+                                                    db.manageCityActivity(oldActiveCity, 0);
+                                                    db.manageCityActivity(nameTV.getText().toString(), 1);
+                                                }
+                                                Intent intent = new Intent(context, MainActivity.class);
+                                                context.startActivity(intent);
+                                            }
+                                        }
+
+            );
         }
+    }
+
+    public String findActuallyActiveCity(){
+        for(int i=0; i<cityModelArrayList.size();i++){
+            if(cityModelArrayList.get(i).getActivity() == 1)
+                return cityModelArrayList.get(i).getName();
+        }
+        return "";
     }
 }

@@ -10,6 +10,7 @@ import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -50,18 +51,23 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar loadingPB;
     private TextView cityNameTV, temperatureTV, conditionTv;
     private RecyclerView weatherRV;
-    private ImageView backIV, iconIV, searchIV, settingsIV, mapIV;
+    private ImageView backIV, iconIV,  settingsIV, mapIV;
     private ArrayList<WeatherRVModel> weatherRVModelArrayList;
     private WeatherRVAdapter weatherRVAdapter;
     private LocationManager locationManager;
     private final int PERMISSION_CODE = 1;
     private String cityName;
+    private DBHelper db;
+
+    private static final String a = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Log.d(a, "dupa");
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
+        db = new DBHelper(this);
 
         setContentView(R.layout.activity_main);
         mapIV = findViewById(R.id.idIVMap);
@@ -93,7 +99,14 @@ public class MainActivity extends AppCompatActivity {
 
             getWeatherInfo(cityName);
         } else {
-            getWeatherInfo("London");
+            Cursor result = db.getCityByActivity();
+            StringBuffer buffer = new StringBuffer();
+            if(result.getCount() == 1) {
+                while (result.moveToNext()) {
+                    buffer.append(result.getString(1));
+                }
+            }
+            getWeatherInfo(buffer.toString());
         }
 
         mapIV.setOnClickListener(new View.OnClickListener() {
@@ -105,6 +118,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        Log.d(a, "restart");
+//    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

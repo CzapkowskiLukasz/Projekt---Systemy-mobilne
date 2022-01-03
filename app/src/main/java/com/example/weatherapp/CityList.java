@@ -59,6 +59,8 @@ public class CityList extends AppCompatActivity {
 
         ArrayList<CityModel> cityModelArrayList = new ArrayList<CityModel>();
 
+        cityModelArrayList = getData();
+        refreshData(cityModelArrayList);
         refreshList();
 
         setSwiper();
@@ -72,18 +74,8 @@ public class CityList extends AppCompatActivity {
                 if (city.isEmpty()) {
                     Toast.makeText(CityList.this, "nie moze byc puste", Toast.LENGTH_SHORT).show();
                 } else {
-                    if(cityModelArrayListHelper != null){
-                        for(int i=0; i< cityModelArrayListHelper.size() ; i++){
-                            if(cityModelArrayListHelper.get(i).getName().equals(city)){
-                                Toast.makeText(CityList.this, "juz dodany", Toast.LENGTH_SHORT).show();
-                                isAdded = true;
-                                break;
-                            }
-                        }
-                    }
-                    if(isAdded == false){
-                        addCity(city, db);
-                    }
+
+                        manageCity(city, "addCity");
                     }
                 cityEdt.setText("");
                 hideSoftKeyboard(CityList.this);
@@ -112,8 +104,14 @@ public class CityList extends AppCompatActivity {
 
     private void refreshList() {
         cityModelArrayList = getData();
-        weatherListAdapter = new WeatherListAdapter(this, cityModelArrayList);
+        weatherListAdapter = new WeatherListAdapter(this, db, cityModelArrayList);
         weatherCityList.setAdapter((weatherListAdapter));
+    }
+
+    private void refreshData(ArrayList<CityModel> cityModelArrayList){
+        for(int i=0; i <cityModelArrayList.size();i++){
+           manageCity(cityModelArrayList.get(i).getName(), "editCity");
+        }
     }
 
     private ArrayList<CityModel> getData() {
@@ -125,9 +123,8 @@ public class CityList extends AppCompatActivity {
         }
 
         while (result.moveToNext()) {
-            cityModelArrayListHelper.add(new CityModel(result.getString(3), result.getString(1), result.getString(2)));
+            cityModelArrayListHelper.add(new CityModel(result.getString(3), result.getString(1), result.getString(2), result.getInt(4)));
         }
-        int kutas = cityModelArrayListHelper.size();
         return cityModelArrayListHelper;
     }
 
@@ -150,7 +147,7 @@ public class CityList extends AppCompatActivity {
             Toast.makeText(CityList.this, "byku cos nie wyszlo", Toast.LENGTH_SHORT).show();
     }
 
-    private void addCity(String cityName, DBHelper dbHelper) {
+    private void manageCity(String cityName, String state) {
         String url = "http://api.weatherapi.com/v1/forecast.json?key=267e447e5e524f4286d134655213012&q=" + cityName + "&days=1&aqi=no&alerts=no";
         RequestQueue requestQueue = Volley.newRequestQueue((CityList.this));
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -160,9 +157,22 @@ public class CityList extends AppCompatActivity {
                     String name = response.getJSONObject("location").getString("name");
                     String temperature = response.getJSONObject("current").getString("temp_c");
                     String conditionIcon = response.getJSONObject("current").getJSONObject("condition").getString("icon");
-                    Boolean result = dbHelper.insertCity(name, temperature, conditionIcon, 0);
-                    getData();
-                    validateData(result);
+                    if(state.equals("addCity")){
+                        if(cityModelArrayList != null) {
+                            for (int i = 0; i < cityModelArrayList.size(); i++) {
+                                if (cityModelArrayList.get(i).getName().equals(name)) {
+                                    Toast.makeText(CityList.this, "juz dodany", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+                            }
+                        }
+                        Boolean result = db.insertCity(name, temperature, conditionIcon, 0);
+                        validateData(result);
+                    }
+                    else{
+                        db.updateCity(name, temperature, conditionIcon);
+                    }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

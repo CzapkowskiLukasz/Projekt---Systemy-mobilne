@@ -7,5 +7,3 @@ l
 app/build.gradle,f/4/f4a01d6a4fcb971362ec00a83903fd3902f52164
 n
 >app/src/main/java/com/example/weatherapp/WeatherRVAdapter.java,f/e/fefbe577369919763cf88f8661cab540938a20f0
-j
-:app/src/main/java/com/example/weatherapp/MainActivity.java,6/f/6fb8c1fa96b971bdbaf33004d95f7d40a37a7716
