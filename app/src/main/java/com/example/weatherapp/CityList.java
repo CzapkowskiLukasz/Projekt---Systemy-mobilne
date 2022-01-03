@@ -1,6 +1,9 @@
 package com.example.weatherapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
@@ -58,6 +61,8 @@ public class CityList extends AppCompatActivity {
 
         refreshList();
 
+        setSwiper();
+
         searchIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,6 +90,24 @@ public class CityList extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void setSwiper(){
+        weatherCityList.setLayoutManager(new GridLayoutManager(this, 1));
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                deleteCity(viewHolder.getLayoutPosition());
+            }
+        });
+
+        itemTouchHelper.attachToRecyclerView(weatherCityList);
     }
 
     private void refreshList() {
@@ -116,6 +139,17 @@ public class CityList extends AppCompatActivity {
             Toast.makeText(CityList.this, "nie git", Toast.LENGTH_SHORT).show();
     }
 
+    private void deleteCity(int position){
+        String cityToDelete = cityModelArrayList.get(position).getName();
+        Boolean result = db.deleteCity(cityToDelete);
+        if(result) {
+            Toast.makeText(CityList.this, "usuwanie udane", Toast.LENGTH_SHORT).show();
+            refreshList();
+        }
+        else
+            Toast.makeText(CityList.this, "byku cos nie wyszlo", Toast.LENGTH_SHORT).show();
+    }
+
     private void addCity(String cityName, DBHelper dbHelper) {
         String url = "http://api.weatherapi.com/v1/forecast.json?key=267e447e5e524f4286d134655213012&q=" + cityName + "&days=1&aqi=no&alerts=no";
         RequestQueue requestQueue = Volley.newRequestQueue((CityList.this));
@@ -126,7 +160,7 @@ public class CityList extends AppCompatActivity {
                     String name = response.getJSONObject("location").getString("name");
                     String temperature = response.getJSONObject("current").getString("temp_c");
                     String conditionIcon = response.getJSONObject("current").getJSONObject("condition").getString("icon");
-                    Boolean result = dbHelper.insertCity(name, temperature, conditionIcon);
+                    Boolean result = dbHelper.insertCity(name, temperature, conditionIcon, 0);
                     getData();
                     validateData(result);
                 } catch (JSONException e) {

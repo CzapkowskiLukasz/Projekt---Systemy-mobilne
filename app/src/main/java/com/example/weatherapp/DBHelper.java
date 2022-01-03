@@ -17,7 +17,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("create Table UserData(Id INT primary key, Name TEXT, Temperature TEXT, Icon TEXT)");
+        sqLiteDatabase.execSQL("create Table UserData(Id INT primary key, Name TEXT, Temperature TEXT, Icon TEXT, IsActive INT)");
 
     }
 
@@ -26,14 +26,32 @@ public class DBHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP Table if exists UserData");
     }
 
-    public Boolean insertCity(String name, String temperature, String icon) {
+    public Boolean insertCity(String name, String temperature, String icon, int activity) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("Icon", icon);
         contentValues.put("Name", name);
         contentValues.put("Temperature", temperature);
+        contentValues.put("IsActive", activity);
         long result = db.insert("UserData", null, contentValues);
         return result != -1;
+    }
+
+    public Boolean deleteCity (String name){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM UserData WHERE Name = ?", new String[] {name});
+        if(cursor.getCount()>0){
+            long result = db.delete("UserData", "name=?", new String[] {name});
+            if (result == -1){
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+        else{
+            return false;
+        }
     }
 
     public Cursor getData() {
