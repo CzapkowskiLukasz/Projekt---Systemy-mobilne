@@ -2,15 +2,25 @@ package com.example.weatherapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -21,6 +31,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.squareup.picasso.Picasso;
 
@@ -28,20 +39,27 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class CityList extends AppCompatActivity {
 
     private ArrayList<CityModel> cityModelArrayList;
     private RecyclerView weatherCityList;
     private WeatherListAdapter weatherListAdapter;
+    private FloatingActionButton getLocation;
 
     private DBHelper db;
 
     private ImageView searchIV;
     private TextInputEditText cityEdt;
+
+    private LocationManager locationManager;
+    private final int PERMISSION_CODE = 1;
+    protected MyLocationListener locationListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +69,7 @@ public class CityList extends AppCompatActivity {
 
         db = new DBHelper(this);
 
+        getLocation = findViewById(R.id.fab);
         weatherCityList = findViewById(R.id.idCityList);
         cityModelArrayList = new ArrayList<>();
         searchIV = findViewById(R.id.idIVSearch);
@@ -76,13 +95,42 @@ public class CityList extends AppCompatActivity {
                     Toast.makeText(CityList.this, "nie moze byc puste", Toast.LENGTH_SHORT).show();
                 } else {
 
-                        manageCity(city, "addCity");
+                        manageCity(normalize(city), "addCity");
                     }
                 cityEdt.setText("");
                 hideSoftKeyboard(CityList.this);
             }
         });
 
+        getLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+                locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                if (ActivityCompat.checkSelfPermission(CityList.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(CityList.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(CityList.this, new String[]{
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION,
+                    }, PERMISSION_CODE);
+                }
+                locationListener = new MyLocationListener();
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+            }
+        });
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PERMISSION_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "dawaj uprawnienia dziadu", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }
     }
 
     private void setSwiper(){
@@ -113,6 +161,7 @@ public class CityList extends AppCompatActivity {
         for(int i=0; i <cityModelArrayList.size();i++){
            manageCity(cityModelArrayList.get(i).getName(), "editCity");
         }
+        refreshList();
     }
 
     private ArrayList<CityModel> getData() {
@@ -199,4 +248,98 @@ public class CityList extends AppCompatActivity {
             );
         }
     }
+
+    private class MyLocationListener implements LocationListener {
+        @Override
+        public void onLocationChanged(@NonNull Location loc) {
+            String city = getCityName(loc.getLongitude(), loc.getLatitude());
+            if(!city.equals("Not found")){
+                manageCity(city, "addCity");
+                locationManager.removeUpdates(locationListener);
+                locationManager=null;
+            }
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+            // TODO Auto-generated method stub
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+            // TODO Auto-generated method stub
+        }
+
+        @Override
+        public void onStatusChanged(String provider,
+                                    int status, Bundle extras) {
+            // TODO Auto-generated method stub
+        }
+
+        private String getCityName(double longitude, double latitude) {
+            String cityName = "Not found";
+            Geocoder gcd = new Geocoder(getBaseContext(), Locale.getDefault());
+            try {
+                List<Address> addresses = gcd.getFromLocation(latitude, longitude, 10);
+                for (Address address : addresses) {
+                    if (address != null) {
+                        String city = address.getLocality();
+                        if (city != null && !city.equals("")) {
+                            cityName = city;
+                        }
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return normalize(cityName);
+        }
+    }
+
+    private String normalize(String cityName){
+        String ogCityName = cityName;
+        for(int i = 0; i< ogCityName.length(); i++){
+            char character = ogCityName.charAt(i);
+            switch (character){
+                case 'Ą':
+                    ogCityName =ogCityName.replaceAll("Ą", "A");
+                case 'ą':
+                    ogCityName =ogCityName.replaceAll("ą", "a");
+                case 'Ę':
+                    ogCityName =ogCityName.replaceAll("Ę", "E");
+                case 'ę':
+                    ogCityName =ogCityName.replaceAll("ę", "e");
+                case 'Ć':
+                    ogCityName =ogCityName.replaceAll("Ć", "C");
+                case 'ć':
+                    ogCityName =ogCityName.replaceAll("ć", "c");
+                case 'Ł':
+                    ogCityName =ogCityName.replaceAll("Ł", "L");
+                case 'ł':
+                    ogCityName =ogCityName.replaceAll("ł", "l");
+                case 'Ń':
+                    ogCityName =ogCityName.replaceAll("Ń", "N");
+                case 'ń':
+                    ogCityName =ogCityName.replaceAll("ń", "n");
+                case 'Ó':
+                    ogCityName = ogCityName.replaceAll("Ó", "O");
+                case 'ó':
+                    ogCityName = ogCityName.replaceAll("ó", "o");
+                case 'Ś':
+                    ogCityName = ogCityName.replaceAll("Ś", "S");
+                case 'ś':
+                    ogCityName = ogCityName.replaceAll("ś", "s");
+                case 'Ź':
+                    ogCityName =ogCityName.replaceAll("Ź", "Z");
+                case 'ź':
+                    ogCityName =ogCityName.replaceAll("ź", "z");
+                case 'Ż':
+                    ogCityName = ogCityName.replaceAll("Ż", "Z");
+                case 'ż':
+                    ogCityName = ogCityName.replaceAll("ż", "z");
+            }
+        }
+        return ogCityName;
+    }
 }
+

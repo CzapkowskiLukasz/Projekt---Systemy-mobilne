@@ -15,9 +15,12 @@ import android.database.Cursor;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -58,16 +61,12 @@ public class MainActivity extends AppCompatActivity {
     private ImageView backIV, iconIV,  settingsIV, mapIV;
     private ArrayList<WeatherRVModel> weatherRVModelArrayList;
     private WeatherRVAdapter weatherRVAdapter;
-    private LocationManager locationManager;
-    private final int PERMISSION_CODE = 1;
-    private String cityName;
     private DBHelper db;
     private SwipeRefreshLayout swipeContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         db = new DBHelper(this);
 
@@ -101,29 +100,22 @@ public class MainActivity extends AppCompatActivity {
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
-
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(MainActivity.this, new String[]{
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-            }, PERMISSION_CODE);
-        }
-
-        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-
-        if (location != null) {
-            cityName = getCityName(location.getLongitude(), location.getLatitude());
-
-            getWeatherInfo(cityName);
-        } else {
             setCity();
-        }
 
         mapIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, CityList.class);
+                startActivity(intent);
+            }
+        });
+
+        settingsIV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                        Uri.fromParts("package", getPackageName(), null));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
         });
@@ -142,40 +134,6 @@ public class MainActivity extends AppCompatActivity {
         else{
             getWeatherInfo("Mountain View");
         }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == PERMISSION_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "dawaj uprawnienia dziadu", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        }
-    }
-
-    private String getCityName(double longitude, double latitude) {
-        String cityNAme = "Not found";
-        Geocoder gcd = new Geocoder(getBaseContext(), Locale.getDefault());
-        try {
-            List<Address> addresses = gcd.getFromLocation(latitude, longitude, 10);
-            for (Address address : addresses) {
-                if (address != null) {
-                    String city = address.getLocality();
-                    if (city != null && !city.equals("")) {
-                        cityNAme = city;
-                    } else {
-                        Toast.makeText(this, "Not found", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return cityNAme;
     }
 
     private Boolean compareTime(Date actuallTime, String forecastTimeString) throws ParseException {
@@ -255,3 +213,4 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
+
