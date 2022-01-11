@@ -1,0 +1,138 @@
+
+o	java:S116:"ZRename this field "PERMISSION_CODE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(æöêš
+7
+java:S1170:"!Make this final field static too.(æöêš
+u
+java:S14502"ZRemove the "getLocation" field and declare it as a local variable in the relevant methods.(¬Ÿ§ıÿÿÿÿ
+m
+java:S14506"WRemove the "searchIV" field and declare it as a local variable in the relevant methods.(â€àÒ
+|
+java:S14501"aRemove the "weatherListAdapter" field and declare it as a local variable in the relevant methods.( ğÂ¦ùÿÿÿÿ
+\
+java:S1854K"FRemove this useless assignment to local variable "cityModelArrayList".(ÉéÁ’
+P
+java:S1854A":Remove this useless assignment to local variable "intent".(å¯Ô«
+A
+java:S1481A"+Remove this unused "intent" local variable.(å¯Ô«
+\
+java:S1117K"FRename "cityModelArrayList" which hides the field declared at line 47.(ÉéÁ’
+a
+java:S1854X"LRemove this useless assignment to local variable "cityModelArrayListHelper".(ÿÚµ=
+R
+java:S1481X"=Remove this unused "cityModelArrayListHelper" local variable.(ÿÚµ=
+m
+java:S3252i"WUse static access with "androidx.core.content.ContextCompat" for "checkSelfPermission".(ßÏâÃ
+m
+java:S3252i"WUse static access with "androidx.core.content.ContextCompat" for "checkSelfPermission".(ßÏâÃ
+e
+java:S1874w"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(Ó»×¶şÿÿÿÿ
+B
+java:S1168§"+Return an empty collection instead of null.(¥¹ï
+n
+java:S3776Á"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(†Ïûïÿÿÿÿÿ
+c
+java:S3252ì"LUse static access with "android.content.Context" for "INPUT_METHOD_SERVICE".(²ã¾ì
+a	java:S128¹"LEnd this switch case with an unconditional break, return or throw statement.(ØŸn
+b	java:S128·"LEnd this switch case with an unconditional break, return or throw statement.( êÒ
+g	java:S128µ"LEnd this switch case with an unconditional break, return or throw statement.(øÙöãÿÿÿÿÿ
+g	java:S128³"LEnd this switch case with an unconditional break, return or throw statement.(¥Äùÿÿÿÿ
+b	java:S128±"LEnd this switch case with an unconditional break, return or throw statement.(ÑÔÏ
+a	java:S128¯"LEnd this switch case with an unconditional break, return or throw statement.(ß´æ"
+g	java:S128­"LEnd this switch case with an unconditional break, return or throw statement.(ôÓ™øÿÿÿÿÿ
+g	java:S128«"LEnd this switch case with an unconditional break, return or throw statement.(Áçºûşÿÿÿÿ
+g	java:S128©"LEnd this switch case with an unconditional break, return or throw statement.(›ÀÔƒÿÿÿÿÿ
+g	java:S128§"LEnd this switch case with an unconditional break, return or throw statement.(‡Õğüùÿÿÿÿ
+b	java:S128¥"LEnd this switch case with an unconditional break, return or throw statement.(ü¾‚ã
+g	java:S128£"LEnd this switch case with an unconditional break, return or throw statement.(æÔ¹½øÿÿÿÿ
+b	java:S128¡"LEnd this switch case with an unconditional break, return or throw statement.(ˆ–£
+b	java:S128Ÿ"LEnd this switch case with an unconditional break, return or throw statement.(ŒíòÕ
+b	java:S128"LEnd this switch case with an unconditional break, return or throw statement.(³€¶
+b	java:S128›"LEnd this switch case with an unconditional break, return or throw statement.(ŞÌı÷
+g	java:S128™"LEnd this switch case with an unconditional break, return or throw statement.(¸•‰©úÿÿÿÿ
+8	java:S131˜""Add a default case to this switch.(¶ûÎÀ
+ƒ
+java:S5854š"gUse the CANON_EQ flag with "Pattern.compile(pattern, CANON_EQ).matcher(input).replaceAll(replacement)".(°•¡üúÿÿÿÿ
+d
+java:S5361š"HReplace this call to "replaceAll()" by a call to the "replace()" method.(°•¡üúÿÿÿÿ
+ƒ
+java:S5854œ"gUse the CANON_EQ flag with "Pattern.compile(pattern, CANON_EQ).matcher(input).replaceAll(replacement)".(‘¹İØúÿÿÿÿ
+d
+java:S5361œ"HReplace this call to "replaceAll()" by a call to the "replace()" method.(‘¹İØúÿÿÿÿ
+ƒ
+java:S5854"gUse the CANON_EQ flag with "Pattern.compile(pattern, CANON_EQ).matcher(input).replaceAll(replacement)".(†„õøÿÿÿÿ
+d
+java:S5361"HReplace this call to "replaceAll()" by a call to the "replace()" method.(†„õøÿÿÿÿ
+~
+java:S5854 "gUse the CANON_EQ flag with "Pattern.compile(pattern, CANON_EQ).matcher(input).replaceAll(replacement)".(øç··
+_
+java:S5361 "HReplace this call to "replaceAll()" by a call to the "replace()" method.(øç··
+~
+java:S5854¢"gUse the CANON_EQ flag with "Pattern.compile(pattern, CANON_EQ).matcher(input).replaceAll(replacement)".(çºøÆ
+_
+java:S5361¢"HReplace this call to "replaceAll()" by a call to the "replace()" method.(çºøÆ
+~
+java:S5854¤"gUse the CANON_EQ flag with "Pattern.compile(pattern, CANON_EQ).matcher(input).replaceAll(replacement)".(†ú‹
+_
+java:S5361¤"HReplace this call to "replaceAll()" by a call to the "replace()" method.(†ú‹
+d
+java:S5361¦"HReplace this call to "replaceAll()" by a call to the "replace()" method.(´çÏäşÿÿÿÿ
+d
+java:S5361¨"HReplace this call to "replaceAll()" by a call to the "replace()" method.(œÌµñüÿÿÿÿ
+~
+java:S5854ª"gUse the CANON_EQ flag with "Pattern.compile(pattern, CANON_EQ).matcher(input).replaceAll(replacement)".(¿ûÜ°
+_
+java:S5361ª"HReplace this call to "replaceAll()" by a call to the "replace()" method.(¿ûÜ°
+ƒ
+java:S5854¬"gUse the CANON_EQ flag with "Pattern.compile(pattern, CANON_EQ).matcher(input).replaceAll(replacement)".(ĞÜ€–ûÿÿÿÿ
+d
+java:S5361¬"HReplace this call to "replaceAll()" by a call to the "replace()" method.(ĞÜ€–ûÿÿÿÿ
+ƒ
+java:S5854®"gUse the CANON_EQ flag with "Pattern.compile(pattern, CANON_EQ).matcher(input).replaceAll(replacement)".(ËúÏÛûÿÿÿÿ
+d
+java:S5361®"HReplace this call to "replaceAll()" by a call to the "replace()" method.(ËúÏÛûÿÿÿÿ
+ƒ
+java:S5854°"gUse the CANON_EQ flag with "Pattern.compile(pattern, CANON_EQ).matcher(input).replaceAll(replacement)".(¼‹ó‘şÿÿÿÿ
+d
+java:S5361°"HReplace this call to "replaceAll()" by a call to the "replace()" method.(¼‹ó‘şÿÿÿÿ
+ƒ
+java:S5854²"gUse the CANON_EQ flag with "Pattern.compile(pattern, CANON_EQ).matcher(input).replaceAll(replacement)".( ŠÛ¯ıÿÿÿÿ
+d
+java:S5361²"HReplace this call to "replaceAll()" by a call to the "replace()" method.( ŠÛ¯ıÿÿÿÿ
+ƒ
+java:S5854´"gUse the CANON_EQ flag with "Pattern.compile(pattern, CANON_EQ).matcher(input).replaceAll(replacement)".(ÿîşÿÿÿÿ
+d
+java:S5361´"HReplace this call to "replaceAll()" by a call to the "replace()" method.(ÿîşÿÿÿÿ
+~
+java:S5854¶"gUse the CANON_EQ flag with "Pattern.compile(pattern, CANON_EQ).matcher(input).replaceAll(replacement)".(÷±š˜
+_
+java:S5361¶"HReplace this call to "replaceAll()" by a call to the "replace()" method.(÷±š˜
+ƒ
+java:S5854¸"gUse the CANON_EQ flag with "Pattern.compile(pattern, CANON_EQ).matcher(input).replaceAll(replacement)".(ÿÎÁ™ÿÿÿÿÿ
+d
+java:S5361¸"HReplace this call to "replaceAll()" by a call to the "replace()" method.(ÿÎÁ™ÿÿÿÿÿ
+ƒ
+java:S5854º"gUse the CANON_EQ flag with "Pattern.compile(pattern, CANON_EQ).matcher(input).replaceAll(replacement)".(¥ë¶Íÿÿÿÿÿ
+d
+java:S5361º"HReplace this call to "replaceAll()" by a call to the "replace()" method.(¥ë¶Íÿÿÿÿÿ
+ƒ
+java:S5854¼"gUse the CANON_EQ flag with "Pattern.compile(pattern, CANON_EQ).matcher(input).replaceAll(replacement)".(ó¯âÿùÿÿÿÿ
+d
+java:S5361¼"HReplace this call to "replaceAll()" by a call to the "replace()" method.(ó¯âÿùÿÿÿÿ
+o
+java:S2293K"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÉéÁ’
+d
+java:S1192É"HDefine a constant instead of duplicating this literal "current" 3 times.(À«¡‹ûÿÿÿÿ
+^
+java:S1192]"HDefine a constant instead of duplicating this literal "addCity" 3 times.(¹ü‚æ
+C
+java:S1604T"(Make this anonymous inner class a lambda(¾„š¤ùÿÿÿÿ
+>
+java:S1604d"(Make this anonymous inner class a lambda(î¡šÇ
+D
+java:S1604Ä"(Make this anonymous inner class a lambda(ÎÄªÿÿÿÿÿ
+D
+java:S1604à"(Make this anonymous inner class a lambda(´¸©”üÿÿÿÿ
+A
+java:S5411±"*Use the primitive boolean expression here.(€‘¨Ä
+A
+java:S5411º"*Use the primitive boolean expression here.(€‘¨Ä

@@ -3,14 +3,10 @@ package com.example.weatherapp;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-public class DBHelper extends SQLiteOpenHelper {
+public class DBHelper extends SQLiteOpenHelper implements IDbHelper {
     public DBHelper(Context context) {
         super(context, "UserData.db", null, 1);
     }
@@ -18,7 +14,6 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("create Table UserData(Id INT primary key, Name TEXT, Temperature TEXT, Icon TEXT, IsActive INT, IsDay INT)");
-
     }
 
     @Override
@@ -38,24 +33,20 @@ public class DBHelper extends SQLiteOpenHelper {
         return result != -1;
     }
 
-    public Boolean manageCityActivity(String name, int activity){
+    public Boolean manageCityActivity(String name, int activity) {
         SQLiteDatabase DB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("IsActive", activity);
         Cursor cursor = DB.rawQuery("Select * from UserData where Name = ?", new String[]{name});
         if (cursor.getCount() > 0) {
             long result = DB.update("UserData", contentValues, "Name=?", new String[]{name});
-            if (result == -1) {
-                return false;
-            } else {
-                return true;
-            }
+            return result != -1;
         } else {
             return false;
         }
     }
 
-    public Cursor getCityByActivity(){
+    public Cursor getCityByActivity() {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM UserData WHERE IsActive = 1", null);
         return cursor;
@@ -69,29 +60,19 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = DB.rawQuery("Select * from UserData where Name = ?", new String[]{name});
         if (cursor.getCount() > 0) {
             long result = DB.update("UserData", contentValues, "Name=?", new String[]{name});
-            if (result == -1) {
-                return false;
-            } else {
-                return true;
-            }
+            return result != -1;
         } else {
             return false;
         }
     }
 
-    public Boolean deleteCity (String name){
+    public Boolean deleteCity(String name) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM UserData WHERE Name = ?", new String[] {name});
-        if(cursor.getCount()>0){
-            long result = db.delete("UserData", "name=?", new String[] {name});
-            if (result == -1){
-                return false;
-            }
-            else{
-                return true;
-            }
-        }
-        else{
+        Cursor cursor = db.rawQuery("SELECT * FROM UserData WHERE Name = ?", new String[]{name});
+        if (cursor.getCount() > 0) {
+            long result = db.delete("UserData", "name=?", new String[]{name});
+            return result != -1;
+        } else {
             return false;
         }
     }

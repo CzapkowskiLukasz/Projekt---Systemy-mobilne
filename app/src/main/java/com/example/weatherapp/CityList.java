@@ -1,12 +1,5 @@
 package com.example.weatherapp;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
@@ -25,6 +18,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -33,14 +33,11 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
-import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -75,11 +72,10 @@ public class CityList extends AppCompatActivity {
         searchIV = findViewById(R.id.idIVSearch);
         cityEdt = findViewById(R.id.idEdtCity);
 
-
         ArrayList<CityModel> cityModelArrayList = new ArrayList<CityModel>();
 
         cityModelArrayList = getData();
-        if(cityModelArrayList != null)
+        if (cityModelArrayList != null)
             refreshData(cityModelArrayList);
         refreshList();
 
@@ -89,14 +85,13 @@ public class CityList extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String city = cityEdt.getText().toString();
-                Boolean isAdded = false;
                 ArrayList<CityModel> cityModelArrayListHelper = getData();
                 if (city.isEmpty()) {
-                    Toast.makeText(CityList.this, "nie moze byc puste", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CityList.this, R.string.emptyName, Toast.LENGTH_SHORT).show();
                 } else {
 
-                        manageCity(normalize(city), "addCity");
-                    }
+                    manageCity(normalize(city), "addCity");
+                }
                 cityEdt.setText("");
                 hideSoftKeyboard(CityList.this);
             }
@@ -125,15 +120,15 @@ public class CityList extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == PERMISSION_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.permissiongranted, Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, "dawaj uprawnienia dziadu", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.permissionNotGranted, Toast.LENGTH_SHORT).show();
                 finish();
             }
         }
     }
 
-    private void setSwiper(){
+    private void setSwiper() {
         weatherCityList.setLayoutManager(new GridLayoutManager(this, 1));
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
@@ -157,9 +152,9 @@ public class CityList extends AppCompatActivity {
         weatherCityList.setAdapter((weatherListAdapter));
     }
 
-    private void refreshData(ArrayList<CityModel> cityModelArrayList){
-        for(int i=0; i <cityModelArrayList.size();i++){
-           manageCity(cityModelArrayList.get(i).getName(), "editCity");
+    private void refreshData(ArrayList<CityModel> cityModelArrayList) {
+        for (int i = 0; i < cityModelArrayList.size(); i++) {
+            manageCity(cityModelArrayList.get(i).getName(), "editCity");
         }
         refreshList();
     }
@@ -168,7 +163,7 @@ public class CityList extends AppCompatActivity {
         ArrayList<CityModel> cityModelArrayListHelper = new ArrayList<>();
         Cursor result = db.getData();
         if (result.getCount() == 0) {
-            Toast.makeText(CityList.this, "git", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CityList.this, R.string.error, Toast.LENGTH_SHORT).show();
             return null;
         }
 
@@ -181,20 +176,18 @@ public class CityList extends AppCompatActivity {
     private void validateData(Boolean result) {
         if (result) {
             refreshList();
-            Toast.makeText(CityList.this, "git", Toast.LENGTH_SHORT).show();
         } else
-            Toast.makeText(CityList.this, "nie git", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CityList.this, R.string.error, Toast.LENGTH_SHORT).show();
     }
 
-    private void deleteCity(int position){
+    private void deleteCity(int position) {
         String cityToDelete = cityModelArrayList.get(position).getName();
         Boolean result = db.deleteCity(cityToDelete);
-        if(result) {
-            Toast.makeText(CityList.this, "usuwanie udane", Toast.LENGTH_SHORT).show();
+        if (result) {
+            Toast.makeText(CityList.this, R.string.delete, Toast.LENGTH_SHORT).show();
             refreshList();
-        }
-        else
-            Toast.makeText(CityList.this, "byku cos nie wyszlo", Toast.LENGTH_SHORT).show();
+        } else
+            Toast.makeText(CityList.this, R.string.error, Toast.LENGTH_SHORT).show();
     }
 
     private void manageCity(String cityName, String state) {
@@ -208,20 +201,20 @@ public class CityList extends AppCompatActivity {
                     String temperature = response.getJSONObject("current").getString("temp_c");
                     String conditionIcon = response.getJSONObject("current").getJSONObject("condition").getString("icon");
                     int isDay = response.getJSONObject("current").getInt("is_day");
-                    if(state.equals("addCity")){
-                        if(cityModelArrayList != null) {
+                    if (state.equals("addCity")) {
+                        if (cityModelArrayList != null) {
                             for (int i = 0; i < cityModelArrayList.size(); i++) {
                                 if (cityModelArrayList.get(i).getName().equals(name)) {
-                                    Toast.makeText(CityList.this, "juz dodany", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(CityList.this, R.string.alreadyAdded, Toast.LENGTH_SHORT).show();
                                     return;
                                 }
                             }
                         }
                         Boolean result = db.insertCity(name, temperature, conditionIcon, 0, isDay);
                         validateData(result);
-                    }
-                    else{
-                        db.updateCity(name, temperature, conditionIcon);
+                    } else {
+                        Boolean result = db.updateCity(name, temperature, conditionIcon);
+                        validateData(result);
                     }
 
                 } catch (JSONException e) {
@@ -231,7 +224,7 @@ public class CityList extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(CityList.this, "enter valid city name", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CityList.this, R.string.enterValidName, Toast.LENGTH_SHORT).show();
             }
         });
         requestQueue.add(jsonObjectRequest);
@@ -253,27 +246,11 @@ public class CityList extends AppCompatActivity {
         @Override
         public void onLocationChanged(@NonNull Location loc) {
             String city = getCityName(loc.getLongitude(), loc.getLatitude());
-            if(!city.equals("Not found")){
+            if (!city.equals("Not found")) {
                 manageCity(city, "addCity");
                 locationManager.removeUpdates(locationListener);
-                locationManager=null;
+                locationManager = null;
             }
-        }
-
-        @Override
-        public void onProviderDisabled(String provider) {
-            // TODO Auto-generated method stub
-        }
-
-        @Override
-        public void onProviderEnabled(String provider) {
-            // TODO Auto-generated method stub
-        }
-
-        @Override
-        public void onStatusChanged(String provider,
-                                    int status, Bundle extras) {
-            // TODO Auto-generated method stub
         }
 
         private String getCityName(double longitude, double latitude) {
@@ -296,31 +273,31 @@ public class CityList extends AppCompatActivity {
         }
     }
 
-    private String normalize(String cityName){
+    private String normalize(String cityName) {
         String ogCityName = cityName;
-        for(int i = 0; i< ogCityName.length(); i++){
+        for (int i = 0; i < ogCityName.length(); i++) {
             char character = ogCityName.charAt(i);
-            switch (character){
+            switch (character) {
                 case 'Ą':
-                    ogCityName =ogCityName.replaceAll("Ą", "A");
+                    ogCityName = ogCityName.replaceAll("Ą", "A");
                 case 'ą':
-                    ogCityName =ogCityName.replaceAll("ą", "a");
+                    ogCityName = ogCityName.replaceAll("ą", "a");
                 case 'Ę':
-                    ogCityName =ogCityName.replaceAll("Ę", "E");
+                    ogCityName = ogCityName.replaceAll("Ę", "E");
                 case 'ę':
-                    ogCityName =ogCityName.replaceAll("ę", "e");
+                    ogCityName = ogCityName.replaceAll("ę", "e");
                 case 'Ć':
-                    ogCityName =ogCityName.replaceAll("Ć", "C");
+                    ogCityName = ogCityName.replaceAll("Ć", "C");
                 case 'ć':
-                    ogCityName =ogCityName.replaceAll("ć", "c");
+                    ogCityName = ogCityName.replaceAll("ć", "c");
                 case 'Ł':
-                    ogCityName =ogCityName.replaceAll("Ł", "L");
+                    ogCityName = ogCityName.replaceAll("Ł", "L");
                 case 'ł':
-                    ogCityName =ogCityName.replaceAll("ł", "l");
+                    ogCityName = ogCityName.replaceAll("ł", "l");
                 case 'Ń':
-                    ogCityName =ogCityName.replaceAll("Ń", "N");
+                    ogCityName = ogCityName.replaceAll("Ń", "N");
                 case 'ń':
-                    ogCityName =ogCityName.replaceAll("ń", "n");
+                    ogCityName = ogCityName.replaceAll("ń", "n");
                 case 'Ó':
                     ogCityName = ogCityName.replaceAll("Ó", "O");
                 case 'ó':
@@ -330,9 +307,9 @@ public class CityList extends AppCompatActivity {
                 case 'ś':
                     ogCityName = ogCityName.replaceAll("ś", "s");
                 case 'Ź':
-                    ogCityName =ogCityName.replaceAll("Ź", "Z");
+                    ogCityName = ogCityName.replaceAll("Ź", "Z");
                 case 'ź':
-                    ogCityName =ogCityName.replaceAll("ź", "z");
+                    ogCityName = ogCityName.replaceAll("ź", "z");
                 case 'Ż':
                     ogCityName = ogCityName.replaceAll("Ż", "Z");
                 case 'ż':

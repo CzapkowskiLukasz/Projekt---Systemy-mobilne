@@ -2,28 +2,18 @@ package com.example.weatherapp;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.ViewHolder> {
 
@@ -64,7 +54,7 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
     @Override
     public int getItemCount() {
 
-        if (cityModelArrayList!= null)
+        if (cityModelArrayList != null)
             return cityModelArrayList.size();
         else
             return 0;
@@ -87,9 +77,9 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
                                             @Override
                                             public void onClick(View view) {
                                                 String oldActiveCity = findActuallyActiveCity();
-                                                if(oldActiveCity.isEmpty())
+                                                if (oldActiveCity.isEmpty())
                                                     db.manageCityActivity(nameTV.getText().toString(), 1);
-                                                else{
+                                                else {
                                                     db.manageCityActivity(oldActiveCity, 0);
                                                     db.manageCityActivity(nameTV.getText().toString(), 1);
                                                 }
@@ -102,9 +92,9 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
         }
     }
 
-    public String findActuallyActiveCity(){
-        for(int i=0; i<cityModelArrayList.size();i++){
-            if(cityModelArrayList.get(i).getActivity() == 1)
+    public String findActuallyActiveCity() {
+        for (int i = 0; i < cityModelArrayList.size(); i++) {
+            if (cityModelArrayList.get(i).getActivity() == 1)
                 return cityModelArrayList.get(i).getName();
         }
         return "";

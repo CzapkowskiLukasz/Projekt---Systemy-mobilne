@@ -1,27 +1,11 @@
 package com.example.weatherapp;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-import android.Manifest;
-import android.app.ActionBar;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -30,27 +14,26 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.location.LocationAvailability;
-import com.google.android.material.textfield.TextInputEditText;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -58,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar loadingPB;
     private TextView cityNameTV, temperatureTV, conditionTv, timeTv;
     private RecyclerView weatherRV;
-    private ImageView backIV, iconIV,  settingsIV, mapIV;
+    private ImageView backIV, iconIV, settingsIV, mapIV;
     private ArrayList<WeatherRVModel> weatherRVModelArrayList;
     private WeatherRVAdapter weatherRVAdapter;
     private DBHelper db;
@@ -67,6 +50,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
 
         db = new DBHelper(this);
 
@@ -86,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         weatherRVAdapter = new WeatherRVAdapter(this, weatherRVModelArrayList);
         weatherRV.setAdapter((weatherRVAdapter));
 
-        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        swipeContainer = findViewById(R.id.swipeContainer);
         // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -100,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
-            setCity();
+        setCity();
 
         mapIV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,26 +109,22 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void setCity(){
+    public void setCity() {
         Cursor result = db.getCityByActivity();
         StringBuffer buffer = new StringBuffer();
-        if(result.getCount() == 1) {
+        if (result.getCount() == 1) {
             while (result.moveToNext()) {
                 buffer.append(result.getString(1));
             }
             getWeatherInfo(buffer.toString());
-        }
-        else{
+        } else {
             getWeatherInfo("Mountain View");
         }
     }
 
     private Boolean compareTime(Date actuallTime, String forecastTimeString) throws ParseException {
         Date forecastTimeDate = parseDate(forecastTimeString);
-        if(forecastTimeDate.after(actuallTime))
-            return true;
-        else
-            return false;
+        return forecastTimeDate.after(actuallTime);
     }
 
     private Date parseDate(String dateString) throws ParseException {
@@ -180,15 +163,14 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     JSONObject forecastObj = response.getJSONObject("forecast");
-                    for(int j=0; j<2; j++){
+                    for (int j = 0; j < 2; j++) {
                         JSONObject forecast0 = forecastObj.getJSONArray("forecastday").getJSONObject(j);
                         JSONArray hourArray = forecast0.getJSONArray("hour");
 
                         for (int i = 0; i < hourArray.length(); i++) {
                             JSONObject hourObj = hourArray.getJSONObject(i);
                             String time = hourObj.getString("time");
-                            if(compareTime(actuallDate, time))
-                            {
+                            if (compareTime(actuallDate, time)) {
                                 String temper = hourObj.getString("temp_c");
                                 String img = hourObj.getJSONObject("condition").getString("icon");
                                 String wind = hourObj.getString("wind_kph");
@@ -205,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(MainActivity.this, "enter valid city name", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, R.string.enterValidName , Toast.LENGTH_SHORT).show();
             }
         });
 

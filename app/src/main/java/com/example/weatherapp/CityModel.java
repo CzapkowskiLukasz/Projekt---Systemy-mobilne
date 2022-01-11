@@ -5,8 +5,8 @@ public class CityModel {
     private String temperature;
     private String icon;
     private String name;
-    private int activity;
-    private int isDay;
+    private final int activity;
+    private final int isDay;
 
     public CityModel(String icon, String name, String temperature, int activity, int isDay) {
         this.temperature = temperature;

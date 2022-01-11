@@ -12,13 +12,17 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:src="@drawable/ic_location"
-        app:tint="@color/backgroundColor"
-        android:backgroundTint="@color/white"
-        android:layout_margin="16dp"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:tint="@color/buttonForeground"
+        android:backgroundTint="@color/button"
+        app:borderWidth="0dp"
+        android:src="@drawable/ic_location"
         ></com.google.android.material.floatingactionbutton.FloatingActionButton>
 
     <LinearLayout
@@ -35,14 +39,14 @@
             android:layout_margin="10dp"
             android:layout_weight="4.5"
             android:background="@android:color/transparent"
-            android:hint="enter city"
+            android:hint="@string/search"
             android:padding="5dp"
-            android:textColorHint="@color/sky"
-            app:boxStrokeColor="@color/sky"
-            app:boxStrokeErrorColor="@color/sky"
-            app:helperTextTextColor="@color/sky"
-            app:hintTextColor="@color/sky"
-            app:placeholderTextColor="@color/sky">
+            android:textColorHint="@color/buttonForeground"
+            app:boxStrokeColor="@color/buttonForeground"
+            app:boxStrokeErrorColor="@color/buttonForeground"
+            app:helperTextTextColor="@color/buttonForeground"
+            app:hintTextColor="@color/buttonForeground"
+            app:placeholderTextColor="@color/buttonForeground">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/idEdtCity"
@@ -52,7 +56,7 @@
                 android:importantForAutofill="no"
                 android:inputType="text"
                 android:singleLine="true"
-                android:textColor="@color/sky"
+                android:textColor="@color/buttonForeground"
                 android:textSize="14sp"></com.google.android.material.textfield.TextInputEditText>
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -62,21 +66,23 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_weight="0.5"
             android:background="@android:color/transparent"
             android:src="@drawable/ic_search"
-            app:tint="@color/sky"></ImageView>
+            app:tint="@color/buttonForeground"></ImageView>
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_below="@id/idLLList"
+        android:id="@+id/idCityList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/idCityList"
+        android:layout_below="@id/idLLList"
         android:orientation="vertical"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
-    </androidx.recyclerview.widget.RecyclerView>
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"></androidx.recyclerview.widget.RecyclerView>
 
 
 

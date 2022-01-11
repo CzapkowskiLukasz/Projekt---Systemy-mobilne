@@ -1,3 +1,12 @@
 <resources>
-    <string name="app_name">WeatherApp</string>
+    <string name="app_name" translatable="false">WeatherApp</string>
+    <string name="forecast">Weather forecast</string>
+    <string name="search">Enter city</string>
+    <string name="enterValidName">Enter valid city name</string>
+    <string name="emptyName">City name can\'t be empty</string>
+    <string name="permissiongranted">Permission granted</string>
+    <string name="permissionNotGranted">Permission not granted</string>
+    <string name="error">Unknown error</string>
+    <string name="delete">City deleted from your list</string>
+    <string name="alreadyAdded">City is already added</string>
 </resources>

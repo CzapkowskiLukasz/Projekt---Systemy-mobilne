@@ -1,22 +1,9 @@
 
-\
-java:S11260"AReplace this if-then-else statement by a single return statement.(Ğüæ§şÿÿÿÿ
-\
-java:S1126H"AReplace this if-then-else statement by a single return statement.(Ğüæ§şÿÿÿÿ
-\
-java:S1126W"AReplace this if-then-else statement by a single return statement.(Ğüæ§şÿÿÿÿ
-X
-java:S1128"BRemove this unused import 'android.database.DatabaseErrorHandler'.(¥î©
-N
-java:S1128
-"8Remove this unused import 'androidx.annotation.NonNull'.(ˆÛúÜ
-O
-java:S1128"9Remove this unused import 'androidx.annotation.Nullable'.(¾Èêš
 _
-java:S1192%"IDefine a constant instead of duplicating this literal "UserData" 4 times.(ÂĞÚ
-k	java:S117*"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ğ™³²øÿÿÿÿ
-k	java:S117A"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ğ™³²øÿÿÿÿ
+java:S1192 "IDefine a constant instead of duplicating this literal "UserData" 4 times.(ÂĞÚ
+k	java:S117%"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ğ™³²øÿÿÿÿ
+k	java:S1178"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ğ™³²øÿÿÿÿ
 t
-java:S1488<"^Immediately return this expression instead of assigning it to the temporary variable "cursor".( ”š
+java:S14883"^Immediately return this expression instead of assigning it to the temporary variable "cursor".( ”š
 y
-java:S1488e"^Immediately return this expression instead of assigning it to the temporary variable "cursor".(—Ñù×üÿÿÿÿ
+java:S1488R"^Immediately return this expression instead of assigning it to the temporary variable "cursor".(—Ñù×üÿÿÿÿ

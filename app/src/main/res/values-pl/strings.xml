@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="forecast">Prognoza pogody</string>
+    <string name="search">Nazwa miasta</string>
+    <string name="enterValidName">Wprowadź prawidłową nazwę miasta</string>
+    <string name="emptyName">Nazwa miast nie może być pusta</string>
+    <string name="permissiongranted">Uprawnienia nadane</string>
+    <string name="permissionNotGranted">Uprawnienia nie nadane</string>
+    <string name="error">Nieznany błąd</string>
+    <string name="delete">Pomyślnie usunięto</string>
+    <string name="alreadyAdded">Miasto jest już dodane</string>
+</resources>

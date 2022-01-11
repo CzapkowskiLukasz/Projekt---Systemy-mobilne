@@ -1,0 +1,29 @@
+
+e
+java:S1659*"JDeclare "temperatureTV" and all following declarations on a separate line.(¢À±öıÿÿÿÿ
+Y
+java:S1659,"CDeclare "iconIV" and all following declarations on a separate line.(òĞÎĞ
+j
+java:S1450,"TRemove the "mapIV" field and declare it as a local variable in the relevant methods.(òĞÎĞ
+o
+java:S1450,"YRemove the "settingsIV" field and declare it as a local variable in the relevant methods.(òĞÎĞ
+m
+java:S1450+"XRemove the "weatherRV" field and declare it as a local variable in the relevant methods.(ßØ>
+z
+java:S1149r"_Replace the synchronized class "StringBuffer" by an unsynchronized one such as "StringBuilder".(¨âàøÿÿÿÿ
+a
+java:S1192š"JDefine a constant instead of duplicating this literal "condition" 3 times.(¯äŠ
+d
+java:S1192—"HDefine a constant instead of duplicating this literal "current" 4 times.(À«¡‹ûÿÿÿÿ
+C
+java:S1604N"(Make this anonymous inner class a lambda(–”µøÿÿÿÿ
+>
+java:S1604\"(Make this anonymous inner class a lambda(ÖÙØ¯
+>
+java:S1604d"(Make this anonymous inner class a lambda(®Ş‹à
+D
+java:S1604"(Make this anonymous inner class a lambda(ÎÄªÿÿÿÿÿ
+D
+java:S1604»"(Make this anonymous inner class a lambda(´¸©”üÿÿÿÿ
+F
+java:S5411­"*Use the primitive boolean expression here.(ß±òûÿÿÿÿ

@@ -32,38 +32,73 @@
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:src="@color/black"></ImageView>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:id="@+id/idLLBtns">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:src="@drawable/ic_settings"
-                android:layout_margin="10dp"
-                android:id="@+id/idIVSettings"></ImageView>
-            <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-            </View>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:src="@drawable/ic_map"
-                android:layout_margin="10dp"
-                android:id="@+id/idIVMap"></ImageView>
 
-        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_margin="10dp">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_settings"
+                    android:id="@+id/idIVSettings"
+                    app:tint="@color/buttonForeground"
+                    android:backgroundTint="@color/button"
+                    app:borderWidth="0dp">
+                </com.google.android.material.floatingactionbutton.FloatingActionButton>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="10dp"
+                    android:layout_weight="1">
+                </View>
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_map"
+                    android:id="@+id/idIVMap"
+                    android:backgroundTint="@color/button"
+                    app:borderWidth="0dp"
+                    app:tint="@color/buttonForeground">
+                </com.google.android.material.floatingactionbutton.FloatingActionButton>
+            </LinearLayout>
+        </RelativeLayout>
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:id="@+id/idLLBtns">-->
+<!--            <ImageView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="0.5"-->
+<!--                android:src="@drawable/ic_settings"-->
+<!--                android:layout_margin="10dp"-->
+<!--                android:scaleType="fitStart"-->
+<!--                ></ImageView>-->
+<!--            <View-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_weight="1">-->
+<!--            </View>-->
+<!--            <ImageView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="0.5"-->
+<!--                android:src="@drawable/ic_map"-->
+<!--                android:layout_margin="10dp"-->
+<!--                android:scaleType="fitEnd"></ImageView>-->
+
+<!--        </LinearLayout>-->
 
         <TextView
             android:id="@+id/idTVCityName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/idLLBtns"
             android:layout_marginTop="30dp"
             android:gravity="center"
             android:padding="20dp"
@@ -120,16 +155,18 @@
             android:textColor="@color/white"
             android:layout_below="@+id/idIVIcon">
         </TextView>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:layout_marginBottom="10dp"
-            android:text="waether forecast"
             android:layout_above="@+id/idRVWeather"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/forecast"
             android:textColor="@color/white"
-            android:textStyle="bold">
-        </TextView>
+            android:textStyle="bold"></TextView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
